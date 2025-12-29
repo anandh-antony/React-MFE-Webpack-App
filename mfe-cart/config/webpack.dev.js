@@ -1,21 +1,21 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const {ModuleFederationPlugin} = require("webpack").container;
 const path = require("path");
+const { merge } = require('webpack-merge');
 
 const mfConfig = require('./mf.config.dev.js');
 const commonConfig = require('./webpack.common.js');
 
-module.exports = {
-  ...commonConfig,
+const devConfig = {
   mode: "development",
   devtool: 'cheap-module-source-map',
+  output: {
+    publicPath: 'http://localhost:3002/',
+  },
   devServer: {
     static: path.join(__dirname, "..", "dist"),
     port: 3002,
     open: true,
-  },
-  output: {
-    publicPath: "auto",
   },
   plugins: [
     new ModuleFederationPlugin(mfConfig),
@@ -24,4 +24,6 @@ module.exports = {
     }),
   ],
 };
+
+module.exports = merge(commonConfig, devConfig);
 
