@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
 const BannerPlugin = require('webpack/lib/BannerPlugin');
 const { merge } = require('webpack-merge');
-
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const {ModuleFederationPlugin} = require("webpack").container;
 const path = require("path");
 
@@ -17,6 +17,8 @@ const prodConfig  = {
   output: {
     filename: '[name].bundle.js',
     chunkFilename: `[name].[contenthash:8]${timestamp}.chunk.js`,
+    path: path.resolve(__dirname, '..', 'dist'),
+    clean: true, // Automatically remove old files
   },
   optimization: {
     splitChunks: {
@@ -66,6 +68,7 @@ const prodConfig  = {
   },
   plugins: [
     new ModuleFederationPlugin(mfConfig),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '..', './public/index.html'),
     }),
