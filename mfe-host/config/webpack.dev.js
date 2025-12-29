@@ -10,7 +10,6 @@ const devConfig = {
   mode: "development",
   devtool: "cheap-module-source-map",
   output: {
-    // publicPath: 'http://localhost:3001/',
     publicPath: "auto",
   },
   devServer: {
