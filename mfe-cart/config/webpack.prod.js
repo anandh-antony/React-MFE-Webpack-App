@@ -19,7 +19,20 @@ const prodConfig  = {
     chunkFilename: `[name].[contenthash:8]${timestamp}.chunk.js`,
   },
   optimization: {
-      
+    splitChunks: {
+      chunks: 'all',
+      minChunks: 2,
+      cacheGroups: {
+        main: {
+          test: /[\\/]src[\\/]/,
+          name: 'mainchunk',
+          chunks: 'all',
+          reuseExistingChunk: true,
+          enforce: true,
+          filename: `[name].[contenthash:8]${timestamp}.chunk.js`,
+        },
+      },
+    },
     minimize: true,
     minimizer: [
       new TerserPlugin({
