@@ -5,12 +5,14 @@ const { merge } = require('webpack-merge');
 
 const mfConfig = require('./mf.config.dev.js');
 const commonConfig = require('./webpack.common.js');
+const timestamp = Date.now();
 
 const prodConfig  = {
   mode: "production",
   devtool: 'source-map',
   output: {
-    publicPath: "auto",
+    filename: '[name].bundle.js',
+    chunkFilename: `[name].[contenthash:8]${timestamp}.chunk.js`,
   },
   plugins: [
     new ModuleFederationPlugin(mfConfig),
