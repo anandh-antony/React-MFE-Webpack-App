@@ -1,16 +1,17 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const {ModuleFederationPlugin} = require("webpack").container;
+const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
-const { merge } = require('webpack-merge');
+const { merge } = require("webpack-merge");
 
-const mfConfig = require('./mf.config.dev.js');
-const commonConfig = require('./webpack.common.js');
+const mfConfig = require("./mf.config.dev.js");
+const commonConfig = require("./webpack.common.js");
 
 const devConfig = {
   mode: "development",
-  devtool: 'cheap-module-source-map',
+  devtool: "cheap-module-source-map",
   output: {
-    publicPath: 'http://localhost:3001/',
+    // publicPath: 'http://localhost:3001/',
+    publicPath: "auto",
   },
   devServer: {
     static: path.join(__dirname, "..", "dist"),
@@ -20,10 +21,9 @@ const devConfig = {
   plugins: [
     new ModuleFederationPlugin(mfConfig),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, '..', './public/index.html'),
+      template: path.resolve(__dirname, "..", "./public/index.html"),
     }),
   ],
 };
 
 module.exports = merge(commonConfig, devConfig);
-
